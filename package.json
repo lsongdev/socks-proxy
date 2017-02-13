@@ -1,6 +1,6 @@
 {
   "name": "socks-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -13,7 +13,15 @@
   },
   "homepage": "https://github.com/song940/socks-proxy#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "description": ""
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "socks",
+    "proxy"
+  ],
+  "description": "socks proxy client and server in node.js"
 }

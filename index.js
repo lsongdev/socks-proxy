@@ -1,11 +1,29 @@
+const Stream = require('stream');
+const EventEmitter = require('events');
 
-function SocksProxy(){
-  
+class SOCKS extends EventEmitter {
+  constructor(options){
+    super();
+    Object.assign(this, options);
+    return this;
+  }
+  createConnection(options){
+    return new Connection(options);
+  }
 }
 
-SocksProxy.Server = require('./server');
-SocksProxy.createServer = function(options, callback){
-  return new SocksProxy.Server(options);
+class Connection extends Stream {
+  write(){
+
+  }
+  end(){
+
+  }
+}
+
+SOCKS.Server = require('./server');
+SOCKS.createServer = function(options, callback){
+  return new SOCKS.Server(options);
 };
 
-exports = SocksProxy;
+module.exports = SOCKS;
