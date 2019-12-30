@@ -1,6 +1,6 @@
 'use strict';
 const tcp = require('net');
-const Connection = require('./lib/connection');
+const Connection = require('./connection');
 
 class Server extends tcp.Server {
   constructor(options, proxy) {
@@ -21,9 +21,8 @@ class Server extends tcp.Server {
     connection.on('request', this.proxy.bind(this, connection));
     return connection;
   }
-  processMethod(connection, methods){
+  processMethod(connection, methods) {
     let { method } = this;
-    
     if (typeof method === 'function') {
       const r = method.call(connection, methods);
       if (typeof r === 'number') {
@@ -37,7 +36,7 @@ class Server extends tcp.Server {
       connection.selectMethod(method);
     }
   }
-  processAuth(connection, user){
+  processAuth(connection, user) {
     const { auth } = this;
     if (typeof auth === 'function') {
       const r = auth.call(connection, user);
@@ -56,23 +55,26 @@ class Server extends tcp.Server {
       connection.setAuthenticationStatus(1);
     }
   }
-  /**
-   * default proxy handler
-   * @param {*} client 
-   */
-  proxy(client) {
+  direct(client) {
     const {
       address,
       port
     } = client.request;
     const conn = tcp.connect(port, address, function (err) {
-      if(err) return console.error(`connect ${address}:${port} got an error`, err);
+      if (err) return console.error(`connect ${address}:${port} got an error`, err);
       client.reply(0);
       client.pipe(this).pipe(client);
     });
     conn.on('error', err => {
       console.error(`connection ${address}:${port} got an error`, err.message);
     });
+  }
+  /**
+   * default proxy handler
+   * @param {*} client 
+   */
+  proxy(client) {
+    return this.direct(client);
   }
 }
 

@@ -13,7 +13,7 @@ const Protocol = {};
  */
 Protocol.parseMethods = greeting => {
   const version = greeting[0];
-  const length  = greeting[1];
+  const length = greeting[1];
   const methods = greeting.slice(2);
   return {
     version, methods
@@ -33,9 +33,9 @@ Protocol.parseAuthentication = data => {
   // +----+------+----------+------+----------+
   const version = data[offset++];
   const ulength = data[offset++];
-  const username = String(data.slice(offset, offset+=ulength));
+  const username = String(data.slice(offset, offset += ulength));
   const plength = data[offset++];
-  const password = String(data.slice(offset, offset+=plength));
+  const password = String(data.slice(offset, offset += plength));
   return {
     version,
     username,
@@ -44,9 +44,9 @@ Protocol.parseAuthentication = data => {
 };
 
 Protocol.parseRequest = request => {
-  var ver  = request[0];
-  var cmd  = request[1];
-  var rsv  = request[2];
+  var ver = request[0];
+  var cmd = request[1];
+  var rsv = request[2];
   var atyp = request[3];
   var addr = request.slice(4);
   return Protocol.parseAddress(atyp, addr);
@@ -54,11 +54,11 @@ Protocol.parseRequest = request => {
 
 function formatIPv4(buffer) {
   // buffer.length == 4
-  return [ 
-    buffer[0], 
-    buffer[1], 
-    buffer[2], 
-    buffer[3] 
+  return [
+    buffer[0],
+    buffer[1],
+    buffer[2],
+    buffer[3]
   ].join('.');
 }
 

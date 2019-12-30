@@ -11,23 +11,23 @@ class Connection extends EventEmitter {
     this.stage = 0;
     this.socket = socket;
     this.socket.on('data', this.process.bind(this));
-    this.socket.on('error', e => {});
+    this.socket.on('error', e => { });
   }
-  write(buffer){
-    if(!(buffer instanceof Buffer)){
+  write(buffer) {
+    if (!(buffer instanceof Buffer)) {
       buffer = Buffer.from(buffer);
     }
     this.socket.write(buffer);
     return this;
   }
-  end(buffer){
+  end(buffer) {
     this.socket.end(buffer);
     return this;
   }
-  close(){
+  close() {
     return this.end();
   }
-  pipe(stream){
+  pipe(stream) {
     this.socket.pipe(stream);
     return stream;
   }
@@ -82,7 +82,7 @@ class Connection extends EventEmitter {
     // +----+--------+
     return this.write([0x01, status]);
   }
-  response(request, reply){
+  response(request, reply) {
     this.stage = 3;
     // The SOCKS request information is sent by the client as soon as it has
     // established a connection to the SOCKS server, and completed the
